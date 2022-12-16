@@ -16,6 +16,11 @@ const commentScheme = new Schema(
   }
 );
 
+commentScheme.pre("find", function (next) {
+  this.populate("user");
+  next();
+});
+
 const postScheme = new Schema(
   {
     title: {

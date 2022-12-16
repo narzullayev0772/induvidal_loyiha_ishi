@@ -15,7 +15,9 @@ app.use(
 );
 
 app.use("/api/auth", require("./routes/auth.route"));
+app.use("/api/posts", require("./routes/post.route"));
 // token middleware
+
 app.use((req, res, next) => {
   const token = req.headers["authorization"];
   if (!token) {
@@ -31,9 +33,9 @@ app.use((req, res, next) => {
 });
 
 app.use("/api/users", require("./routes/users.route"));
-app.use("/api/posts", require("./routes/post.route"));
 app.use("/api/upload", require("./routes/uploadfile.route"));
 app.use("/api/comments", require("./routes/comment.route"));
+app.use("/api/likes", require("./routes/like.route"));
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
