@@ -1,15 +1,20 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const commentScheme = new Schema({
-  user: {
-    type: Schema.Types.ObjectId,
-    ref: "User",
+const commentScheme = new Schema(
+  {
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    },
+    comment_text: {
+      type: String,
+    },
   },
-  comment_text: {
-    type: String,
-  },
-});
+  {
+    timestamps: true,
+  }
+);
 
 const postScheme = new Schema(
   {
@@ -52,5 +57,6 @@ postScheme
   });
 
 const Post = mongoose.model("Post", postScheme);
+const Comment = mongoose.model("Comment", commentScheme);
 
-module.exports = Post;
+module.exports = { Post, Comment };
