@@ -5,7 +5,7 @@ const Post = require("../models/post.model");
 // get all posts
 Router.get("/", async (req, res) => {
   try {
-    const posts = await Post.find();
+    const posts = await Post.find().sort({ createdAt: -1 });
     res.status(200).json({
       message: "Posts fetched successfully",
       data: posts,
