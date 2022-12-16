@@ -13,7 +13,6 @@ app.use(
     origin: "*",
   })
 );
-app.use;
 
 app.use("/api/auth", require("./routes/auth.route"));
 // token middleware

@@ -28,6 +28,7 @@ Router.post("/", async (req, res) => {
       user: req.userId,
     });
     const postjson = await newPost.save();
+    user.posts.push(postjson._id);
     res.status(201).json({
       message: "Post created successfully",
       data: postjson,

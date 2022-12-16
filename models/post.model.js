@@ -11,26 +11,30 @@ const commentScheme = new Schema({
   },
 });
 
-const postScheme = new Schema({
-  title: {
-    type: String,
-  },
-  content: {
-    type: String,
-  },
-  user: {
-    type: Schema.Types.ObjectId,
-    ref: "User",
-  },
-
-  likes: [
-    {
+const postScheme = new Schema(
+  {
+    title: {
+      type: String,
+    },
+    content: {
+      type: String,
+    },
+    user: {
       type: Schema.Types.ObjectId,
       ref: "User",
     },
-  ],
-  comments: [commentScheme],
-});
+    likes: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
+    comments: [commentScheme],
+  },
+  {
+    timestamps: true,
+  }
+);
 
 // populate user
 postScheme
