@@ -31,7 +31,6 @@ app.use((req, res, next) => {
     return res.status(401).json({ message: "Unauthorized!" });
   }
 });
-
 app.use("/api/users", require("./routes/users.route"));
 app.use("/api/upload", require("./routes/uploadfile.route"));
 app.use("/api/comments", require("./routes/comment.route"));

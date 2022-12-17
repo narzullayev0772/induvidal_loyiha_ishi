@@ -1,6 +1,6 @@
 const Router = require("express").Router();
 const User = require("../models/user.model");
-const {Post} = require("../models/post.model");
+const { Post } = require("../models/post.model");
 
 // get all posts
 Router.get("/", async (req, res) => {
@@ -17,18 +17,19 @@ Router.get("/", async (req, res) => {
 });
 
 // create post by user
-Router.post("/", async (req, res) => {
+Router.post("/:_id", async (req, res) => {
   try {
-    const user = await User.findById(req.userId);
+    const user = await User.findById(req.params._id);
     if (!user) {
       return res.status(400).json({ message: "User does not exist" });
     }
     const newPost = new Post({
       ...req.body,
-      user: req.userId,
+      user: user._id,
     });
     const postjson = await newPost.save();
     user.posts.push(postjson._id);
+    const newUser = await user.save();
     res.status(201).json({
       message: "Post created successfully",
       data: postjson,
@@ -65,13 +66,13 @@ Router.put("/:id", async (req, res) => {
 });
 
 // delete post if user is owner
-Router.delete("/:id", async (req, res) => {
+Router.delete("/:_id/:id", async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
     if (!post) {
       return res.status(400).json({ message: "Post does not exist" });
     }
-    if (post.user._id.toString() !== req.userId) {
+    if (post.user._id.toString() !== req.params._id) {
       return res.status(403).json({ message: "Unauthorized" });
     }
     await Post.findByIdAndDelete(req.params.id);
